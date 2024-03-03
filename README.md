@@ -205,42 +205,43 @@ Visit `http://localhost:9876/ping` wil be render a "pong!"
 
 Create a `.env`file and put configuration if you need change default value:
 
-```env
-WEBHOOK_URL_ABSOLUTE=the webhook absolute url, not use this if already use WEBHOOK_URL
-WEBHOOK_URL=the webhook url, this config attribute put phone number on the end, no use if use WEBHOOK_URL_ABSOLUTE
-WEBHOOK_TOKEN=the webhook header token
-WEBHOOK_HEADER=the webhook header name
-WEBHOOK_SESSION=webhook to send events of type OnStatus and OnQrCode
-WEBHOOK_TIMEOUT_MS=webhook request timeout, default 5000 ms
-WEBHOOK_SEND_NEW_MESSAGES=true, send new messages to webhook, caution with this, messages will be duplicated, default is false
-BASE_URL=current base url to download medias
-PORT=the http port
-IGNORE_GROUP_MESSAGES=false to send group messages received in socket to webhook, default true
-IGNORE_BROADCAST_STATUSES=false to send stories in socket to webhook, default true
-IGNORE_STATUS_MESSAGE=false to send stories in socket to webhook, default true
-IGNORE_BROADCAST_MESSAGES=false to send broadcast messages in socket to webhook, default false
-IGNORE_HISTORY_MESSAGES=false to import messages when connect, default is true
-IGNORE_OWN_MESSAGES=false to send own messages in socket to webhook, default true
-IGNORE_YOURSELF_MESSAGES=true to ignore messages for yourself, default is true, possible loop if was false
-COMPOSING_MESSAGE=true enable composing before send message as text length, default false
-REJECT_CALLS=message to send when receive a call, default is empty and not reject
-REJECT_CALLS_WEBHOOK=message to send webook when receive a call, default is empty and not send, is deprecated, use MESSAGE_CALLS_WEBHOOK
-MESSAGE_CALLS_WEBHOOK=message to send webook when receive a call, default is empty and not send
-SEND_CONNECTION_STATUS=true to send all connection status to webhook, false to send only important messages, default is true
-BASE_STORE=dir where save sessions, medias and stores. Defaul is ./data
-IGNORE_DATA_STORE=ignore save/retrieve data(message, contacts, groups...)
-AUTO_CONNECT=true, auto connect on start service
-AUTO_RESTART_MS=miliseconds to restart connection, default is 0 and not auto restart
-THROW_WEBHOOK_ERROR=false send webhook error do self whatsapp, default is false, if true throw exception
-NOTIFY_FAILED_MESSAGES=true send message to your self in whatsapp when message failed and enqueued in dead queue
-LOG_LEVEL=log level, default warn
-UNO_LOG_LEVEL=uno log level. default LOG_LEVEL
-SEND_REACTION_AS_REPLY=true to send reactions as replay, default false
-SEND_PROFILE_PICTURE=true to send profile picture users and groups, default is true
-UNOAPI_RETRY_REQUEST_DELAY_MS=retry delay in miliseconds when decrypt failed, default is 1_000(a second)
-PROXY_URL the socks proxy url, default not use
-CLEAN_CONFIG_ON_DISCONNECT=true to clean all saved redis configurations on disconnect number, default is false
-```
+| Parameter                     | Default         | Description                                                                                                     |
+|-------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------|
+| WEBHOOK_URL_ABSOLUTE          |                 | The absolute URL of the webhook. Do not use this if WEBHOOK_URL is already in use.                              |
+| WEBHOOK_URL                   |                 | The webhook URL. This configuration attribute appends the phone number at the end. Do not use if WEBHOOK_URL_ABSOLUTE is in use. |
+| WEBHOOK_TOKEN                 |                 | The token for the webhook header.                                                                               |
+| WEBHOOK_HEADER                |                 | The name of the webhook header.                                                                                 |
+| WEBHOOK_SESSION               |                 | Webhook used to send events of types OnStatus and OnQrCode.                                                     |
+| WEBHOOK_TIMEOUT_MS            | 5000            | The timeout for webhook requests, in milliseconds.                                                              |
+| WEBHOOK_SEND_NEW_MESSAGES     | false           | If true, sends new messages to the webhook. Be cautious, as messages may be duplicated.                         |
+| BASE_URL                      |                 | The current base URL to download media.                                                                         |
+| PORT                          |                 | The HTTP port.                                                                                                  |
+| IGNORE_GROUP_MESSAGES         | true            | If false, sends group messages received in the socket to the webhook.                                           |
+| IGNORE_BROADCAST_STATUSES     | true            | If false, sends broadcast stories received in the socket to the webhook.                                        |
+| IGNORE_STATUS_MESSAGE         | true            | If false, sends status messages received in the socket to the webhook.                                          |
+| IGNORE_BROADCAST_MESSAGES     | false           | If false, sends broadcast messages received in the socket to the webhook.                                       |
+| IGNORE_HISTORY_MESSAGES       | true            | If false, imports messages when connecting.                                                                     |
+| IGNORE_OWN_MESSAGES           | true            | If false, sends own messages received in the socket to the webhook.                                             |
+| IGNORE_YOURSELF_MESSAGES      | true            | If true, ignores messages sent to yourself to avoid potential loops.                                            |
+| COMPOSING_MESSAGE             | false           | If true, enables the display of a composing indicator before sending a message based on text length.           |
+| REJECT_CALLS                  |                 | The message to send when receiving a call. By default, calls are not rejected if this is empty.                 |
+| REJECT_CALLS_WEBHOOK          |                 | Deprecated. Use MESSAGE_CALLS_WEBHOOK instead.                                                                  |
+| MESSAGE_CALLS_WEBHOOK         |                 | The message to send to the webhook when receiving a call. By default, no message is sent if this is empty.      |
+| SEND_CONNECTION_STATUS        | true            | If true, sends all connection statuses to the webhook. If false, only important messages are sent.              |
+| BASE_STORE                    | ./data          | The directory where sessions, media, and stores are saved.                                                      |
+| IGNORE_DATA_STORE             |                 | If set, ignores saving and retrieving data (messages, contacts, groups, etc.).                                  |
+| AUTO_CONNECT                  | true            | If true, automatically connects on service start.                                                               |
+| AUTO_RESTART_MS               | 0               | The time in milliseconds to wait before restarting the connection. By default, auto-restart is disabled.        |
+| THROW_WEBHOOK_ERROR           | false           | If true, sends webhook errors to self on WhatsApp and throws an exception.                                      |
+| NOTIFY_FAILED_MESSAGES        | true            | If true, sends a message to yourself on WhatsApp when a message fails and is enqueued in the dead queue.        |
+| LOG_LEVEL                     | warn            | The log level.                                                                                                  |
+| UNO_LOG_LEVEL                 | LOG_LEVEL       | The log level for Uno. By default, it is the same as LOG_LEVEL.                                                 |
+| SEND_REACTION_AS_REPLY        | false           | If true, sends reactions as a reply.                                                                            |
+| SEND_PROFILE_PICTURE          | true            | If true, sends the profile pictures of users and groups.                                                        |
+| UNOAPI_RETRY_REQUEST_DELAY_MS | 1000            | The delay in milliseconds to retry a request when decryption fails. By default, it is set to one second.        |
+| PROXY_URL                     |                 | The SOCKS proxy URL. By default, no proxy is used.                                                              |
+| CLEAN_CONFIG_ON_DISCONNECT    | false           | If true, clears all saved Redis configurations upon disconnecting a number.                                     |
+
 
 Bucket env to config assets media compatible with S3, this config can't save in redis:
 
